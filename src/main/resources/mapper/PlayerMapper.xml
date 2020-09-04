@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ln.mapper.PlayerMapper" >
+	<resultMap id="pMap" type="Player">
+		<id property="pid" column="pid"/>
+		<result property="pname" column="pname"/>
+		<result property="page" column="page"/>
+		<result property="pbirthday" column="pbirthday"/>
+		<association property="school" javaType="School">
+			<id property="sid" column="sid"/>
+			<result property="sname" column="sname"/>
+		</association>
+		<association property="team" javaType="Team">
+			<id property="tid" column="tid"/>
+			<result property="tname" column="tname"/>
+			<result property="tarea" column="tarea"/>
+		</association>
+	</resultMap>
+	<select id="getAll" resultMap="pMap">
+		SELECT * FROM t_player p
+		LEFT JOIN t_school s ON p.sid = s.sid
+		LEFT JOIN t_team t ON p.tid = t.tid
+	</select>
+	<delete id="delete">
+		delete from t_player where pid = #{id}
+	</delete>
+	<select id="findSchool" resultType="School">
+		SELECT * FROM t_school
+	</select>
+	<select id="findTeam" resultType="Team">
+		SELECT * FROM t_team
+	</select>
+	<insert id="save" parameterType="Player">
+		insert into t_player
+		values(0,#{pname},#{page},#{pbirthday},#{sid},#{tid})
+	</insert>
+	<select id="getOneByName" resultType="Player">
+		SELECT * FROM t_player WHERE pname = #{pname}
+	</select>
+</mapper>
