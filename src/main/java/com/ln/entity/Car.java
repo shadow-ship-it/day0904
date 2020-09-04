@@ -41,6 +41,7 @@ public class Car {
         Car c2 = new Car("宝马", 200);
         Car c3 = new Car("奔驰", 300);
 
+
         //2)
         HashMap<Car, Double> m1 = new HashMap<>();
         m1.put(c1,10000.0);
